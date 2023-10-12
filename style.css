@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: sans-serif, monospace;
+}
+.container{
+    max-width: 800px;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: linear-gradient(to right, #fecc00, #dbb005);
+    padding: 60px 20px 40px 50px;
+    position: relative;
+}
+.form-wrapper{
+    
+}
+.heading{
+    font-size: 18px;
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+.bold-heading{
+    font-weight: bolder;
+    font-family: system-ui;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.name, .email{
+    padding: 20px;
+    font-size: 14px;
+    border: none;
+    margin-bottom: 15px;
+}
+.checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;  
+    margin-bottom: 20px; 
+}
+label{
+    margin-left: 5px;
+    font-size: 14px;
+}
+input.input-checkbox{
+    cursor: pointer;
+    background-color: lightgray;
+    width: 18px;
+    height: 18px;
+}
+.submit-btn{
+    padding: 20px;
+    border: none;
+    background: black;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+a{
+    text-align: center;
+    margin-top: 10px;
+    color: black;
+    font-size: 10px;
+}
+.img-wrapper{
+    margin-left: 40px;
+}
+.close-btn{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-weight: 600;
+    font-size: 25px;
+    font-family: cursive;
+    line-height: 1;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+@media screen and (max-width: 480px) { 
+    .container{
+        padding: 0 20px;
+    }
+    .main{
+        padding: 40px 20px;
+        background-image: linear-gradient(to bottom, #fecc00, #dbb005);
+    }
+    .name,.email,.submit-btn{
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+    .heading{
+        font-size: 15px;
+        text-align: center;
+        padding: 0;
+    }
+    .img-wrapper{
+        display: none;
+    }
+    .close-btn{
+        font-size: 16px;
+        top: 15px;
+        right: 15px;
+    }
+    .checkbox{
+        margin-bottom: 25px;
+    }
+}
