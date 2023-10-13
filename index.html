@@ -18,14 +18,17 @@
                         <br>SAVINGS, NEWS, UPDATES AND MORE
                     </div>
                     <div class="form">
-                        <form action="">
-                            <input type="text" placeholder="Your Name" class="name">
-                            <input type="text" placeholder="Email Address" class="email">
-                            <div class="checkbox">
-                                <input type="checkbox" class="input-checkbox">
-                                <label for="">Check this box to receive monthly newsletter.</label>
-                            </div>
-                            <button type="submit" class="submit-btn">SIGN UP</button>
+                        <form action="" id="form">
+                            <input type="text" placeholder="Your Name" class="name" id="name" required maxlength="50">
+                            <p class="error-msg">*Please enter a valid name</p>
+                            <input type="text" placeholder="Email Address" class="email" id="email" required maxlength="50" >
+                            <p class="error-msg">*Please enter a valid email</p>
+                            <label id="label">
+                                <input type="checkbox" id="checkbox" class="input-checkbox" required>
+                                Check this box to receive monthly newsletter.
+                            </label>
+                            <p class="error-msg">*Please check the checkbox</p>
+                            <input type="submit" class="submit-btn" value="SIGN UP"></input>
                             <a href="#">PRIVACY POLICY</a>
                         </form>
                     </div>
