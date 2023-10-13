@@ -6,15 +6,24 @@ body{
     font-family: sans-serif, monospace;
 }
 .container{
-    max-width: 800px;
+    width: 100%;
     margin: auto;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background: rgba(33, 33, 33, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 .main{
+    max-width: 700px;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -23,8 +32,8 @@ body{
     padding: 60px 20px 40px 50px;
     position: relative;
 }
-.form-wrapper{
-    
+.container.visible{
+    opacity: 1;
 }
 .heading{
     font-size: 18px;
@@ -97,15 +106,13 @@ a{
     .main{
         justify-content: center;
         padding: 40px 20px;
+        margin: 0 20px;
     }
     .content-wrapper{
         width: 100%;
     }
 }
 @media screen and (max-width: 480px) { 
-    .container{
-        padding: 0 20px;
-    }
     .main{
         background-image: linear-gradient(to bottom, #fecc00, #dbb005);
     }
