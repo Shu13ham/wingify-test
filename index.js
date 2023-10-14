@@ -72,5 +72,6 @@ document.getElementById("form").addEventListener("submit", function(event) {
         setFormData("Name", name.value, 5);
         setFormData("Email", email.value, 5);
         setCookie('exitIntentShown', true, 5);
+        document.querySelector('.container').classList.remove('visible');
     }
 });
