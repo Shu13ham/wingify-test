@@ -1,25 +1,24 @@
-const CookieService = {
-    setCookie(name, value, days) {
-        let expires = '';
+function setCookie(name, value, daysToExpire, path = '/') {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+    const cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=${path}`;
+    document.cookie = cookie;
+};
 
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = '; expires=' + date.toUTCString();
+function setFormData(name, value, daysToExpire, path = '/') {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+    const cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=${path}`;
+    document.cookie = cookie;
+};
+
+function getCookie(name) {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].split('=');
+        if (cookie[0] === name) {
+            return cookie[1];
         }
-
-        document.cookie = name + '=' + (value || '')  + expires + ';';
-    },
-
-    getCookie(name) {
-        const cookies = document.cookie.split(';');
-
-        for (const cookie of cookies) {
-            if (cookie.indexOf(name + '=') > -1) {
-                return cookie.split('=')[1];
-            }
-        }
-
-        return null;
     }
+    return null;
 };

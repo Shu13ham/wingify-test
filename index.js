@@ -1,41 +1,42 @@
 const exit = e => {
     const shouldExit =
-        [...e.target.classList].includes('main') || // user clicks on mask
+        [...e.target.classList].includes('container') || // user clicks on mask
         e.target.className === 'close-btn' || // user clicks on the close icon
         e.keyCode === 27; // user hits escape
 
     if (shouldExit) {
         document.querySelector('.container').classList.remove('visible');
+        setCookie('exitIntentShown', true, 5);
     }
 };
+
 const mouseEvent = e => {
     const shouldShowExitIntent = 
         !e.toElement && 
         !e.relatedTarget &&
-        e.clientY < 10;
-
+        e.clientY < 10 &&
+        !getCookie('exitIntentShown');
     if (shouldShowExitIntent && screen.width >=481) {
-        document.removeEventListener('mouseout', mouseEvent);
+        // document.removeEventListener('mouseout', mouseEvent);
         document.querySelector('.container').classList.add('visible');
-        CookieService.setCookie('exitIntentShown', true, 30);
     }
 };
 
-const myTimeout = setTimeout(myFunc, 5000);
-function myFunc(){
-    if(screen.width <= 480){
+setTimeout(function myFunc(){
+    if(screen.width <= 480 && !getCookie('exitIntentShown')){
         document.querySelector('.container').classList.add('visible');
-        CookieService.setCookie('exitIntentShown', true, 30);
     }
-}
+}, 5000);
 
-if (!CookieService.getCookie('exitIntentShown')) {
-    setTimeout(() => {
-        document.addEventListener('mouseout', mouseEvent);
-        document.addEventListener('keydown', exit);
-        document.querySelector('.container').addEventListener('click', exit);
-    }, 0);
-}
+ (function checkCookie(){
+    if (!getCookie('exitIntentShown')) {
+        setTimeout(() => {
+            document.addEventListener('mouseout', mouseEvent);
+            document.addEventListener('keydown', exit);
+            document.querySelector('.container').addEventListener('click', exit);
+        }, 0);
+    }
+ })();
 
 document.getElementById("form").addEventListener("submit", function(event) {
     var name = document.getElementById("name");
@@ -51,29 +52,25 @@ document.getElementById("form").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent form submission
     }
 
-    if (!emailPattern.test(email.value) || email.value == null) {
+    else if (!emailPattern.test(email.value) || email.value == null) {
+        name.classList.remove("error");
+        name.style.border = "green solid 3px"; 
         email.style.border = "red solid 3px"; 
         email.classList.add("error");
         event.preventDefault(); // Prevent form submission
     }
 
-    if (!checkbox.checked) {
+    else if (!checkbox.checked) {
+        email.classList.remove("error");
+        email.style.border = "green solid 3px"; 
         checkbox.style.border = "red solid 1px"; 
         document.getElementById("label").classList.add("error");
         event.preventDefault(); // Prevent form submission
     }
+    else{
+        console.log("s")
+        setFormData("Name", name.value, 5);
+        setFormData("Email", email.value, 5);
+        setCookie('exitIntentShown', true, 5);
+    }
 });
-(function validateName(){
-    var nameValue = document.querySelector(".name").value; 
-    var name = document.querySelector(".name"); 
-    var namePattern = /^[A-Za-z\s]+$/;
-    if (namePattern.test(nameValue)) { 
-        name.style.border = "green solid 3px"; 
-        alert("sdfsd") 
-    } 
-    else { 
-        name.style.border = "red solid 3px"; 
-        return false; 
-    } 
-})
-

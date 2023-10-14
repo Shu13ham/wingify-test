@@ -19,7 +19,7 @@ body{
     right: 0;
     z-index: 1;
     background: rgba(33, 33, 33, 0.8);
-    opacity: 0;
+    display: none;
     transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 .main{
@@ -33,7 +33,7 @@ body{
     position: relative;
 }
 .container.visible{
-    opacity: 1;
+    display: flex;
 }
 .heading{
     font-size: 18px;
@@ -48,28 +48,39 @@ form{
     display: flex;
     flex-direction: column;
 }
-.name, .email{
+.nameInput input, .emailInput input{
     padding: 17px;
     font-size: 14px;
     border: none;
     border: 3px solid white;
+    display: flex;
+    width: 100%;
 }
-.name +p, .email +p, label +p{
+.nameInput, .emailInput, .checkboxInput{
+    position: relative;
+    margin-bottom: 18px;
+    width: 100%;
+    display: flex;
+}
+.nameInput p, .emailInput p, .checkboxInput p{
     font-size: 12px;
     color: red;
     margin: 2px 0 10px 0;
     visibility: hidden;
+    position: absolute;
+    left: 0;
+    bottom: -25px;
 }
-.error.name +p, .error.email +p,  label.error +p{
+.error +p{
     visibility: visible;
 }
 label{
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: flex-start;  
 }
-input.input-checkbox{
+.checkboxInput input{
     cursor: pointer;
     background-color: lightgray;
     width: 18px;
@@ -95,8 +106,8 @@ a{
 }
 .close-btn{
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     font-weight: 600;
     font-size: 25px;
     font-family: cursive;
@@ -122,14 +133,18 @@ a{
     .main{
         background-image: linear-gradient(to bottom, #fecc00, #dbb005);
     }
-    .name,.email,.submit-btn{
-        padding: 10px;
-        margin-bottom: 12px;
+    .nameInput input,.emailInput input{
+        padding: 12px;
+    }
+    .submit-btn{
+        padding: 15px;
+        margin-bottom: 10px;
     }
     .heading{
         font-size: 15px;
         text-align: center;
         padding: 0;
+        margin-bottom: 30px;
     }
     .close-btn{
         font-size: 16px;
