@@ -1,0 +1,331 @@
+const htmlCode = `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingify test</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: sans-serif, monospace;
+        }
+        .container{
+            width: 100%;
+            margin: auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            background: rgba(33, 33, 33, 0.8);
+            display: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        .main{
+            max-width: 720px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background-image: linear-gradient(to right, #fecc00, #dbb005);
+            padding: 60px 20px 40px 50px;
+            position: relative;
+        }
+        .container.visible{
+            display: flex;
+        }
+        .heading{
+            font-size: 18px;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+        .bold-heading{
+            font-weight: bolder;
+            font-family: system-ui;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+        .nameInput input, .emailInput input{
+            padding: 17px;
+            font-size: 14px;
+            border: none;
+            border: 3px solid white;
+            display: flex;
+            width: 100%;
+        }
+        .nameInput, .emailInput, .checkboxInput{
+            position: relative;
+            margin-bottom: 18px;
+            width: 100%;
+            display: flex;
+        }
+        .nameInput p, .emailInput p, .checkboxInput p{
+            font-size: 12px;
+            color: red;
+            margin: 2px 0 10px 0;
+            visibility: hidden;
+            position: absolute;
+            left: 0;
+            bottom: -25px;
+        }
+        .error +p{
+            visibility: visible;
+        }
+        label{
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;  
+        }
+        .checkboxInput input{
+            cursor: pointer;
+            background-color: lightgray;
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+        }
+        .submit-btn{
+            padding: 20px;
+            border: none;
+            background: black;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        a{
+            text-align: center;
+            margin-top: 10px;
+            color: black;
+            font-size: 10px;
+        }
+        .img-wrapper{
+            margin-left: 40px;
+        }
+        .close-btn{
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-weight: 600;
+            font-size: 25px;
+            font-family: cursive;
+            line-height: 1;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+        }
+        @media screen and (max-width: 850px) { 
+            .img-wrapper{
+                display: none;
+            }
+            .main{
+                justify-content: center;
+                padding: 40px 20px;
+                margin: 0 20px;
+            }
+            .content-wrapper{
+                width: 100%;
+            }
+        }
+        @media screen and (max-width: 480px) { 
+            .main{
+                background-image: linear-gradient(to bottom, #fecc00, #dbb005);
+            }
+            .nameInput input,.emailInput input{
+                padding: 12px;
+            }
+            .submit-btn{
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            .heading{
+                font-size: 15px;
+                text-align: center;
+                padding: 0;
+                margin-bottom: 30px;
+            }
+            .close-btn{
+                font-size: 16px;
+                top: 15px;
+                right: 15px;
+            }
+            .checkbox{
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="main">
+            <div class="content-wrapper">
+                <div class="form-wrapper">
+                    <div class="heading">
+                        <span class="bold-heading">GET $10 OFF WHEN YOU SIGN UP FOR</span>
+                        <br>SAVINGS, NEWS, UPDATES AND MORE
+                    </div>
+                    <div class="form">
+                        <form action="" id="form">
+                            <div class="nameInput">
+                                <input type="text" placeholder="Your Name" id="name" required maxlength="50">
+                                <p class="error-msg">*Please enter a valid name</p>
+                            </div>
+                            <div class="emailInput" >
+                                <input type="text" placeholder="Email Address"id="email" required maxlength="50" >
+                                <p class="error-msg">*Please enter a valid email</p>
+                            </div>
+                            <div class="checkboxInput">
+                                <label id="label">
+                                    <input type="checkbox" id="checkbox" required>
+                                    Check this box to receive the monthly newsletter.
+                                </label>
+                                <p class="error-msg">*Please check the checkbox</p>
+                            </div>
+                            <input type="submit" class="submit-btn" value="SIGN UP"></input>
+                            <a href="#">PRIVACY POLICY</a>
+                        </form>
+                    </div>
+                </div>	
+            </div>
+            <div class="img-wrapper">
+                <img src="https://dummyimage.com/300x280/000/fff.png" alt="" width="300" height="280">
+            </div>
+            <button type="button" class="close-btn">X</button>
+        </div>
+    </div>
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setCookie(name, value, daysToExpire, path = '/') {
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+                const cookie = name + '=' + value + '; expires=' + expires.toUTCString() + '; path=' + path;
+                document.cookie = cookie;
+            };
+
+            function setFormData(name, value, daysToExpire, path = '/') {
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+                const cookie = name + '=' + value + '; expires=' + expires.toUTCString() + '; path=' + path;
+                document.cookie = cookie;
+            };
+
+            function getCookie(name) {
+                const cookies = document.cookie.split('; ');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].split('=');
+                    if (cookie[0] === name) {
+                        return cookie[1];
+                    }
+                }
+                return null;
+            };
+            
+            const exit = e => {
+                const shouldExit =
+                    [...e.target.classList].includes('container') || 
+                    e.target.className === 'close-btn' || 
+                    e.keyCode === 27; 
+
+                if (shouldExit) {
+                    document.getElementById('container').classList.remove('visible');
+                    setCookie('exitIntentShown', true, 5);
+                }
+            };
+
+            const mouseEvent = e => {
+                const shouldShowExitIntent = 
+                    !e.toElement && 
+                    !e.relatedTarget &&
+                    e.clientY < 10 &&
+                    !getCookie('exitIntentShown');
+                if (shouldShowExitIntent && screen.width >=481) {
+                    document.getElementById('container').classList.add('visible');
+                }
+            };
+
+            setTimeout(function myFunc(){
+                if(screen.width <= 480 && !getCookie('exitIntentShown')){
+                    document.getElementById('container').classList.add('visible');
+                }
+            }, 5000);
+
+            (function checkCookie(){
+                if (!getCookie('exitIntentShown')) {
+                    setTimeout(() => {
+                        document.addEventListener('mouseout', mouseEvent);
+                        document.addEventListener('keydown', exit);
+                        document.getElementById('container').addEventListener('click', exit);
+                    }, 0);
+                }
+            })();
+
+            document.getElementById("form").addEventListener("submit", function(event) {
+                var name = document.getElementById("name");
+                var email = document.getElementById("email");
+                var checkbox = document.getElementById("checkbox");
+
+                var namePattern = /^[A-Za-z\\s-]+$/; 
+                var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+                if (!namePattern.test(name.value) || name.value == null) {
+                    name.style.border = "red solid 3px"; 
+                    name.classList.add("error");
+                    event.preventDefault();
+                    checkValidation = false;
+                }
+
+                else if (!emailPattern.test(email.value) || email.value == null) {
+                    name.classList.remove("error");
+                    name.style.border = "green solid 3px"; 
+                    email.style.border = "red solid 3px"; 
+                    email.classList.add("error");
+                    event.preventDefault(); 
+                    checkValidation = false;
+                }
+
+                else if (!checkbox.checked) {
+                    email.classList.remove("error");
+                    email.style.border = "green solid 3px"; 
+                    checkbox.style.border = "red solid 1px"; 
+                    document.getElementById("label").classList.add("error");
+                    checkValidation = false;
+                    event.preventDefault(); 
+                }
+                else{
+                    setFormData("Name", name.value, 5);
+                    setFormData("Email", email.value, 5);
+                    setCookie('exitIntentShown', true, 5);
+                    document.getElementById('container').classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+`;
+
+
+const iframe = document.createElement('iframe');
+document.body.appendChild(iframe);
+iframe.name = "Shubham"
+iframe.style.width = "100%";
+iframe.style.height = "100%";
+iframe.style.position = "fixed";
+iframe.style.top = "0";
+iframe.style.left = "0";
+iframe.style.border = "none";
+iframe.contentDocument.open();
+iframe.contentDocument.write(htmlCode);
+iframe.contentDocument.close();
